@@ -1,0 +1,32 @@
+#Time Difference 
+
+Elapse = VAR _curTime =
+     TimeElapse[Date Time Start] 
+VAR _pasttime =
+    CALCULATE (
+         Max(TimeElapse[Date Time Start]) ,
+        TimeElapse[Date Time Start] < _curTime,
+        ALLEXCEPT ( TimeElapse, TimeElapse[User], TimeElapse[Function] )
+    )
+VAR _dif =
+    IF(ISBLANK(_pasttime), 0 ,DATEDIFF ( _pasttime, _curTime, SECOND ))
+RETURN
+    _dif
+
+===========================================================================
+ 
+ 
+Elapse Secs Calc = 
+VAR _curTime =
+    MAX ( TimeElapse[Date Time Start] )
+VAR _pasttime =
+    CALCULATE (
+        MAX ( TimeElapse[Date Time Start] ),
+        TimeElapse[Date Time Start] < _curTime,
+        ALLEXCEPT ( TimeElapse, TimeElapse[User], TimeElapse[Function] )
+    )
+VAR _dif =
+    IF(ISBLANK(_pasttime), 0 ,DATEDIFF ( _pasttime, _curTime, SECOND ))
+RETURN
+    _dif
+   
